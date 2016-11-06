@@ -27,8 +27,8 @@ public class Retriever extends Thread
   static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
   static final String DB_URL = "jdbc:mysql://localhost/navdetails";
 
-  static final String USER = "ndgdev";
-  static final String PASS = "ndgdev";
+  static final String USER = "root";
+  static final String PASS = "root";
 
 
   public Retriever()
