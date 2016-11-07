@@ -17,6 +17,7 @@
 *.iso
 *.jar
 *.rar
+*.war
 *.tar
 *.zip
 
@@ -40,4 +41,4 @@ Thumbs.db
 .classpath
 .settings/
 .project
-.target/
+target/

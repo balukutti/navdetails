@@ -1,5 +1,7 @@
 package com.nav.details;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -48,13 +50,13 @@ public class Retriever extends Thread
   {
     Calendar calendar = Calendar.getInstance();
     calendar.setTime(date);
-    //calendar.add(Calendar.SECOND,45);
+    calendar.add(Calendar.MINUTE, 1);
     
-    calendar.add(Calendar.DATE, 1); 
-    calendar.set(Calendar.HOUR_OF_DAY, 18);
-    calendar.set(Calendar.MINUTE, 00);
-    calendar.set(Calendar.SECOND, 00);
-    calendar.set(Calendar.MILLISECOND, 0);
+//    calendar.add(Calendar.DATE, 1); 
+//    calendar.set(Calendar.HOUR_OF_DAY, 18);
+//    calendar.set(Calendar.MINUTE, 00);
+//    calendar.set(Calendar.SECOND, 00);
+//    calendar.set(Calendar.MILLISECOND, 0);
     return calendar.getTime();
   }
 
@@ -66,14 +68,14 @@ public class Retriever extends Thread
     ArrayList<String> isinCodes = new ArrayList<String>();
     try
     {
-      Class.forName("com.mysql.jdbc.Driver");
-      conn = DriverManager.getConnection(DB_URL,USER,PASS);
+      Class.forName("org.postgresql.Driver");
+      conn = getConnection();
       stmt = conn.createStatement();
-      String queryToSelectAllIsin = "SELECT isin from navdetails";
+      String queryToSelectAllIsin = "SELECT scheme_code from navdetails";
       ResultSet resultSet = stmt.executeQuery(queryToSelectAllIsin);
       while(resultSet.next())
       {
-        isinCodes.add(resultSet.getString("isin"));
+        isinCodes.add(resultSet.getString("scheme_code"));
       }
       NavWebService webService = new NavWebService(new Gson());
       webService.updateAllFunds(isinCodes);
@@ -95,8 +97,8 @@ public class Retriever extends Thread
    ArrayList<InvestmentDetails> investmentDetailsList = new ArrayList<InvestmentDetails>();
    try
    {
-     Class.forName("com.mysql.jdbc.Driver");
-     conn = DriverManager.getConnection(DB_URL,USER,PASS);
+     Class.forName("org.postgresql.Driver");
+     conn = getConnection();
      stmt = conn.createStatement();
      String queryToSelectInvestmentOnToday = "SELECT * from investment_schedule where day = "+date;
      ResultSet resultSet = stmt.executeQuery(queryToSelectInvestmentOnToday);
@@ -125,6 +127,17 @@ public class Retriever extends Thread
    }
  }
 
+ private  Connection getConnection() throws URISyntaxException, SQLException {
+   URI dbUri = new URI("postgres://pdocuroxmivemd:5D82vwDcOvmvkdI9A6ngUXBfWH@ec2-23-23-176-135.compute-1.amazonaws.com:5432/d9ijbh8k4tf33o");
+
+   String username = dbUri.getUserInfo().split(":")[0];
+   String password = dbUri.getUserInfo().split(":")[1];
+   String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
+   dbUrl = dbUrl+"?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";
+
+   return DriverManager.getConnection(dbUrl, username, password);
+}
+ 
  public String getDayOfMonth()
  {
    Calendar cal = Calendar.getInstance();

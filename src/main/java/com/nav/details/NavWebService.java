@@ -6,6 +6,8 @@ package com.nav.details;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.sql.Connection;
@@ -37,14 +39,24 @@ public class NavWebService
   static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
   static final String DB_URL = "jdbc:mysql://localhost/navdetails";
 
-  static final String USER = "ndgdev";
-  static final String PASS = "ndgdev";
+  static final String USER = "root";
+  static final String PASS = "root";
 
   public NavWebService(Gson gson)
   {
     this.gson = gson;
   }
 
+  private  static   Connection getConnection() throws URISyntaxException, SQLException {
+    URI dbUri = new URI("postgres://pdocuroxmivemd:5D82vwDcOvmvkdI9A6ngUXBfWH@ec2-23-23-176-135.compute-1.amazonaws.com:5432/d9ijbh8k4tf33o");
+
+    String username = dbUri.getUserInfo().split(":")[0];
+    String password = dbUri.getUserInfo().split(":")[1];
+    String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
+    dbUrl = dbUrl+"?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";
+
+    return DriverManager.getConnection(dbUrl, username, password);
+}
   public  static Map<String, FundBasicDetails> populateFundMap(String fundCode, String line, Map<String, FundBasicDetails> resultMap, String amountInvested)
   {
     String[] arr = line.split(";");
@@ -66,8 +78,9 @@ public class NavWebService
   {
     Connection conn = null;
     try{
-       Class.forName("com.mysql.jdbc.Driver");
-       conn = DriverManager.getConnection(DB_URL,USER,PASS);
+       //Class.forName("com.mysql.jdbc.Driver");
+       Class.forName("org.postgresql.Driver");
+       conn = getConnection();
        java.sql.Statement stmt = null;
        for (String key : map.keySet())
        {
@@ -76,7 +89,7 @@ public class NavWebService
          double units_held = 0;
          double amount_invested = 0;
          stmt = conn.createStatement();
-         String sql = "SELECT * from navdetails where scheme_code = "+key;
+         String sql = "SELECT * from navdetails where scheme_code = "+Integer.parseInt(key);
          ResultSet rs = stmt.executeQuery(sql);
          while(rs.next()){
            units_held = rs.getDouble("units_held");
@@ -111,8 +124,8 @@ public class NavWebService
   {
     Connection conn = null;
     try{
-       Class.forName("com.mysql.jdbc.Driver");
-       conn = DriverManager.getConnection(DB_URL,USER,PASS);
+      Class.forName("org.postgresql.Driver");
+      conn = getConnection();
        java.sql.Statement stmt = null;
        for (String key : map.keySet())
        {
@@ -120,7 +133,7 @@ public class NavWebService
          fundBasicDetails = map.get(key);
          double units_held = 0;
          stmt = conn.createStatement();
-         String sql = "SELECT * from navdetails where scheme_code = "+key;
+         String sql = "SELECT * from navdetails where scheme_code = "+Integer.parseInt(key);
          ResultSet rs = stmt.executeQuery(sql);
          while(rs.next()){
            units_held = rs.getDouble("units_held");
