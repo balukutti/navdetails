@@ -76,6 +76,7 @@ public class NavWebService
 
   public static void updateDatabaseWithInvestmentDetails(Map<String, FundBasicDetails> map)
   {
+    System.out.println("Start of Updating the investment details for all the holdings.");
     Connection conn = null;
     try{
        //Class.forName("com.mysql.jdbc.Driver");
@@ -107,6 +108,7 @@ public class NavWebService
          stmt.execute(updateTableSQL);
        }
        conn.close();
+       System.out.println("Finish of Updating the investment details for all the holdings.");
     }
     catch(SQLException se)
     {
@@ -122,6 +124,7 @@ public class NavWebService
   
   public static void updateDatabaseWithLatestData(Map<String, FundBasicDetails> map)
   {
+    System.out.println("Start of Updating the daily NAV of the funds.");
     Connection conn = null;
     try{
       Class.forName("org.postgresql.Driver");
@@ -152,6 +155,7 @@ public class NavWebService
          stmt.execute(updateTableSQL);
        }
        conn.close();
+       System.out.println("Finish of Updating the daily NAV of the funds.");
     }
     catch(SQLException se)
     {
