@@ -1,5 +1,7 @@
 package com.nav.details;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -9,8 +11,6 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
-import org.apache.commons.math3.util.Precision;
 
 public class NavService {
 
@@ -41,6 +41,16 @@ public class NavService {
     }
     return String.valueOf(decim.format(percentage))+"%";
   }
+  
+  private  Connection getConnection() throws URISyntaxException, SQLException {
+    URI dbUri = new URI("postgres://pdocuroxmivemd:5D82vwDcOvmvkdI9A6ngUXBfWH@ec2-23-23-176-135.compute-1.amazonaws.com:5432/d9ijbh8k4tf33o");
+
+    String username = dbUri.getUserInfo().split(":")[0];
+    String password = dbUri.getUserInfo().split(":")[1];
+    String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
+
+    return DriverManager.getConnection(dbUrl, username, password);
+}
 
   public ArrayList<FundBasicDetails> retrieveDataFromDb()
   {
@@ -53,7 +63,8 @@ public class NavService {
        Class.forName("com.mysql.jdbc.Driver");
        String investedAmount = null;
        String currentValue = null;
-       conn = DriverManager.getConnection(DB_URL,USER,PASS);
+       conn = getConnection();
+       //conn = DriverManager.getConnection(DB_URL,USER,PASS);
        stmt = conn.createStatement();
        String sqlAmounts = "select sum(amount_invested) as 'invested' , sum(current_value) as 'valuation' from navdetails";
        String sql = "SELECT * from navdetails";
