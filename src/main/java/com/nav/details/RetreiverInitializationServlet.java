@@ -20,7 +20,6 @@ public class RetreiverInitializationServlet extends HttpServlet {
   
   public void init() throws ServletException
   {
-    System.out.println("Initializing the thread");
     Retriever retriever = new Retriever();
     retriever.scheduleSyncShipStationDataTask();
   }

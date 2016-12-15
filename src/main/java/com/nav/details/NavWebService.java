@@ -1,7 +1,3 @@
-/*
- *  Copyright (c) 2009-2013 Novo Dia Group Inc. All rights reserved.
- *  http://novodiagroup.com
- */
 package com.nav.details;
 
 import java.io.BufferedReader;
@@ -14,7 +10,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,7 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.google.gson.Gson;
-import com.mysql.jdbc.PreparedStatement;
 
 /**
  * @author brajendran
