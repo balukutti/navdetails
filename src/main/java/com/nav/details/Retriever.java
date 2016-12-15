@@ -4,19 +4,15 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Map;
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import javax.management.StringValueExp;
 
 import com.google.gson.Gson;
 
@@ -31,12 +27,25 @@ public class Retriever extends Thread
 
   static final String USER = "root";
   static final String PASS = "root";
-
+  HashMap<Integer, String> monthsMapping = null;
 
   public Retriever()
   {
+    monthsMapping = new HashMap<Integer, String>();
+    monthsMapping.put(1, "january");
+    monthsMapping.put(2, "february");
+    monthsMapping.put(3, "march");
+    monthsMapping.put(4, "april");
+    monthsMapping.put(5, "may");
+    monthsMapping.put(6, "june");
+    monthsMapping.put(7, "july");
+    monthsMapping.put(8, "august");
+    monthsMapping.put(9, "september");
+    monthsMapping.put(10, "october");
+    monthsMapping.put(11, "november");
+    monthsMapping.put(12, "december");
   }
-  
+    
   public synchronized void scheduleSyncShipStationDataTask()
   {
     _shipStationScheduledTimer = new Timer();
@@ -93,13 +102,14 @@ public class Retriever extends Thread
    Connection conn = null;
    Statement stmt = null;
    String date = getDayOfMonth();
+   int month = getMonth();
    ArrayList<InvestmentDetails> investmentDetailsList = new ArrayList<InvestmentDetails>();
    try
    {
      Class.forName("org.postgresql.Driver");
      conn = getConnection();
      stmt = conn.createStatement();
-     String queryToSelectInvestmentOnToday = "SELECT * from investment_schedule where day = "+date;
+     String queryToSelectInvestmentOnToday = "SELECT * from investment_schedule where "  +monthsMapping.get(month)+  " = " +date;
      ResultSet resultSet = stmt.executeQuery(queryToSelectInvestmentOnToday);
      while(resultSet.next())
      {
@@ -143,6 +153,14 @@ public class Retriever extends Thread
    cal.setTime(new Date());
    return Integer.toString(cal.get(Calendar.DAY_OF_MONTH));
  }
+ 
+  public int getMonth()
+  {
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(new Date());
+    return cal.get(Calendar.MONTH) + 1;
+  }
+
  
   class SyncShipStationDataTask extends TimerTask
   {
