@@ -60,6 +60,7 @@ public class Retriever extends Thread
     Calendar calendar = Calendar.getInstance();
     calendar.setTime(date);
     
+    calendar.add(calendar.DATE, 1);
     calendar.set(Calendar.HOUR_OF_DAY, 23);
     calendar.set(Calendar.MINUTE, 00);
     calendar.set(Calendar.SECOND, 00);
