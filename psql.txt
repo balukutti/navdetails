@@ -1,0 +1,39 @@
+Application Monitoring:
+https://uptimerobot.com
+http://growmyworth.info
+http://growmyworth.info/index.jsp
+http://growmyworth.info/
+http://growmyworth.info/rest/products
+http://growmyworth.info/rest/products/
+
+
+log into DB:
+heroku pg:psql --app navdetails
+
+show tables:
+\dt
+
+Quit :
+\q
+
+update navdetails set nav = '120.73', units_held = '41.4130', amount_invested = '5000', current_value = '5062.62' where scheme_code = 100122;
+update navdetails set nav = '44.2230', units_held = '284.2010', amount_invested = '12000', current_value = '12568.22' where scheme_code = 105758;
+update navdetails set nav = '44.2200', units_held = '132.4020', amount_invested = '6000', current_value = '5854.82' where scheme_code = 109445;
+update navdetails set nav = '25.8840', units_held = '235.0660', amount_invested = '6000', current_value = '6084.45' where scheme_code = 112090;
+update navdetails set nav = '30.7790', units_held = '364.2980', amount_invested = '11000', current_value = '11212.73' where scheme_code = 103504;
+update navdetails set nav = '46.0207', units_held = '243.4430', amount_invested = '11000', current_value = '11203.42' where scheme_code = 103360;
+update navdetails set nav = '37.1110', units_held = '388.5460', amount_invested = '14000', current_value = '14419.33' where scheme_code = 112932;
+update navdetails set nav = '175.5800', units_held = '63.2350', amount_invested = '11000', current_value = '11102.80' where scheme_code = 103174;
+update navdetails set nav = '31.7600', units_held = '363.8530', amount_invested = '11000', current_value = '11555.97' where scheme_code = 108466;
+update navdetails set nav = '32.0732', units_held = '384.3370', amount_invested = '12000', current_value = '12326.92' where scheme_code = 112092;
+update navdetails set nav = '31.2729', units_held = '222.2870', amount_invested = '7000', current_value = '6951.56' where scheme_code = 105817;
+update navdetails set nav = '30.6230', units_held = '68.8230', amount_invested = '2000', current_value = '2107.57' where scheme_code = 104908;
+update navdetails set nav = '30.7873', units_held = '563.3360', amount_invested = '16000', current_value = '17343.59' where scheme_code = 113177;
+update navdetails set nav = '67.1288', units_held = '119.9810', amount_invested = '8000', current_value = '8054.18' where scheme_code = 102941;
+update navdetails set nav = '21.3960', units_held = '435.7990', amount_invested = '9000', current_value = '9324.36' where scheme_code = 118191;
+update navdetails set nav = '79.5300', units_held = '349.6640', amount_invested = '27000', current_value = '27808.78' where scheme_code = 111381;
+update navdetails set nav = '51.7150', units_held = '362.0620', amount_invested = '18000', current_value = '18724.04' where scheme_code = 105989;
+update navdetails set nav = '29.1400', units_held = '329.0800', amount_invested = '9000', current_value = '9589.39' where scheme_code = 118102;
+update navdetails set nav = '34.7242', units_held = '86.8750', amount_invested = '3000', current_value = '3016.66' where scheme_code = 101818;
+update navdetails set nav = '122.2600', units_held = '140.9020', amount_invested = '17000', current_value = '17226.68' where scheme_code = 102594;
+update navdetails set nav = '30.9156', units_held = '247.9870', amount_invested = '8000', current_value = '7666.67' where scheme_code = 112323;
