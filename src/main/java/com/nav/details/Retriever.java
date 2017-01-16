@@ -62,8 +62,8 @@ public class Retriever extends Thread
     
     calendar.add(calendar.DATE, 1);
     calendar.set(Calendar.HOUR_OF_DAY, 23);
-    calendar.set(Calendar.MINUTE, 00);
-    calendar.set(Calendar.SECOND, 00);
+    calendar.set(Calendar.MINUTE, 07);
+    calendar.set(Calendar.SECOND, 35);
     calendar.set(Calendar.MILLISECOND, 0);
     return calendar.getTime();
   }
